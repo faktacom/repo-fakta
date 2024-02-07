@@ -1,0 +1,33 @@
+diff a/resources/views/layouts/front.blade.php b/resources/views/layouts/front.blade.php	(rejected hunks)
+@@ -379,7 +379,30 @@
+                     <div class="container">
+                         <ul class="navbar-nav">
+                             <li class="owl-carousel owl-theme nav-scroll" id="nav-scroll">
+-                                @foreach (\App\Models\Admin\ListCategory::where('category_type_id',3)->orwhere('category_type_id',1)->orderBy('order','asc')->get() as $cat)
++                                @if (isset($list_category_2))
++                                    @foreach ($list_category_2 as $cat)
++                                        @if ($cat->count_child > 0)
++                                        <div>
++                                            <div>
++                                                <a href="{{route('category.detail', $cat->slug)}}" class="item {{request()->is('category/' . $cat->slug) ? 'link-active' : ''}}">
++                                                    {{$cat->title}}
++                                                </a>
++                                                <i class="fa fa-caret-down"></i>
++                                            </div>
++                                            <ul class="fkt-navbar-child-menu-container">
++                                                <li><a href="#">test123</a></li>
++                                                <li><a href="#">test123</a></li>
++                                                <li><a href="#">test123</a></li>
++                                            </ul> 
++                                        </div>
++                                        @else
++                                            <a href="{{route('category.detail', $cat->slug)}}" class="item {{request()->is('category/' . $cat->slug) ? 'link-active' : ''}}">
++                                                {{$cat->title}}
++                                            </a>
++                                        @endif
++                                    @endforeach
++                                @endif
++                                @foreach (\App\Models\Admin\ListCategory::orderBy('order','asc')->get() as $cat)
+                                 <a href="{{route('category.detail', $cat->slug)}}" class="item {{request()->is('category/' . $cat->slug) ? 'link-active' : ''}}">
+                                     {{$cat->title}}
+                                 </a>
